@@ -1,0 +1,19 @@
+name: Publish to WinGet
+
+# Each published release (not a pre-release) gets its winget pull request to
+# microsoft/winget-pkgs by itself, from the sumaj-lab fork. Like AB Download
+# Manager's. Needs the WINGET_TOKEN secret: a classic GitHub token of
+# sumaj-lab with only the public_repo scope.
+on:
+  release:
+    types: [released]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vedantmgoyal9/winget-releaser@7bd472be23763def6e16bd06cc8b1cdfab0e2fd5 # main @ 2026-03-15
+        with:
+          identifier: 1Zap.1Zap
+          installers-regex: '_x64-setup\.exe$'
+          token: ${{ secrets.WINGET_TOKEN }}
